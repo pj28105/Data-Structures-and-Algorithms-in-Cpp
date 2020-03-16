@@ -64,6 +64,8 @@ sol extended_gcd(ll a,ll b){
 void mmi(ll a,ll m){
     sol ans = extended_gcd(a,m);
     if(ans.gcd == 1){
+        // To handle negative value of x
+        ans.x = (ans.x % m + m) % m; 
         cout << "B = " << ans.x << endl;
     }else{
         cout << "Multiplicative Modulo Inverse Doesnt exsist" << endl;
@@ -76,6 +78,6 @@ signed main(void)
     #ifndef ONLINE_JUDGE
         freopen("../in.txt","r",stdin);
     #endif
-    mmi(5,17);
+    mmi(17,5);
     return 0;
 }
