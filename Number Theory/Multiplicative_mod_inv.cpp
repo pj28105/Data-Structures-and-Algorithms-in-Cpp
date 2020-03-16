@@ -35,10 +35,40 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #define deb(...)
 #endif
 
-ll gcd(ll a,ll b){
-    if(b == 0)
-        return a;
-    return gcd(b,a % b);   
+/*
+    Note :
+        1) For extended Euclid make sure a > b
+        2) Multiplactive modulo inverse only exsist
+        when gcd(A,M) == 1 (for (A.B)mod M = 1)
+*/
+
+struct sol{
+    int x,y,gcd;
+};
+
+sol extended_gcd(ll a,ll b){
+    if(b == 0){
+        sol ans;
+        ans.x = 1;
+        ans.y = 0;
+        ans.gcd = a;
+        return ans;
+    }
+    sol eq,ans;
+    eq = extended_gcd(b,a % b);
+    ans.gcd = eq.gcd;
+    ans.x = eq.y;
+    ans.y = eq.x - ((a/b) * eq.y);
+    return ans;
+}
+
+void mmi(ll a,ll m){
+    sol ans = extended_gcd(a,m);
+    if(ans.gcd == 1){
+        cout << "B = " << ans.x << endl;
+    }else{
+        cout << "Multiplicative Modulo Inverse Doesnt exsist" << endl;
+    }
 }
 
 signed main(void)
@@ -47,6 +77,6 @@ signed main(void)
     #ifndef ONLINE_JUDGE
         freopen("../in.txt","r",stdin);
     #endif
-    cout << gcd(17,5) << endl;
+    mmi(5,17);
     return 0;
 }

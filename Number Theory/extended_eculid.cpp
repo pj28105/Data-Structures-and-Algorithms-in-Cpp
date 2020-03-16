@@ -35,18 +35,11 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #define deb(...)
 #endif
 
-/*
-    Note :
-        Make sure a > b
-*/
-
 struct sol{
     int x,y,gcd;
 };
 
 sol extended_gcd(ll a,ll b){
-    if(a < b)
-        return extended_gcd(b,a);
     if(b == 0){
         sol ans;
         ans.x = 1;
