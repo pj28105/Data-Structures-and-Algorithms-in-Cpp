@@ -35,16 +35,12 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #define deb(...)
 #endif
 
-ll power(ll a,ll b){
-    ll res = 1;
-    while(b > 0){
-        if(b & 1){
-            res = ((res % mod) * (a % mod)) % mod;
-        }
-        b = b >> 1;
-        a = ((a % mod) * (a % mod)) % mod; 
-    }
-    return res;
+ll gcd(ll a,ll b){
+    if(a < b)
+        return gcd(b,a);
+    if(b == 0)
+        return a;
+    return gcd(b,a % b);   
 }
 
 signed main(void)
@@ -53,6 +49,6 @@ signed main(void)
     #ifndef ONLINE_JUDGE
         freopen("../in.txt","r",stdin);
     #endif
-       
+    cout << gcd(10,30) << endl;
     return 0;
 }

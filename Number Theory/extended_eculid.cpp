@@ -35,16 +35,31 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #define deb(...)
 #endif
 
-ll power(ll a,ll b){
-    ll res = 1;
-    while(b > 0){
-        if(b & 1){
-            res = ((res % mod) * (a % mod)) % mod;
-        }
-        b = b >> 1;
-        a = ((a % mod) * (a % mod)) % mod; 
+/*
+    Note :
+        Make sure a > b
+*/
+
+struct sol{
+    int x,y,gcd;
+};
+
+sol extended_gcd(ll a,ll b){
+    if(a < b)
+        return extended_gcd(b,a);
+    if(b == 0){
+        sol ans;
+        ans.x = 1;
+        ans.y = 0;
+        ans.gcd = a;
+        return ans;
     }
-    return res;
+    sol eq,ans;
+    eq = extended_gcd(b,a % b);
+    ans.gcd = eq.gcd;
+    ans.x = eq.y;
+    ans.y = eq.x - ((a/b) * eq.y);
+    return ans;
 }
 
 signed main(void)
@@ -53,6 +68,7 @@ signed main(void)
     #ifndef ONLINE_JUDGE
         freopen("../in.txt","r",stdin);
     #endif
-       
+    sol ans = extended_gcd(15,10);
+    cout << ans.gcd << " " << ans.x << " " << ans.y  << endl;  
     return 0;
 }

@@ -49,7 +49,7 @@ ll power(ll a,ll b){
 
 void seive(int n,bool primes[]){
     memset(primes,1,(n + 1) * sizeof(bool));
-    primes[0] = primes[1] = 0;
+    primes[0] = primes[1] = 0;  
     for(int i = 2; i * i <= n; i++){
         if(primes[i]){
             for(int j = i * i; j <= n; j+= i){
