@@ -37,8 +37,7 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 
 /*
     Note :
-        1) For extended Euclid make sure a > b
-        2) Multiplactive modulo inverse only exsist
+        1) Multiplactive modulo inverse only exsist
         when gcd(A,M) == 1 (for (A.B)mod M = 1)
 */
 
