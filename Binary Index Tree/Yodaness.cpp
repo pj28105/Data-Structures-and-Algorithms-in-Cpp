@@ -47,12 +47,14 @@ ll power(ll a,ll b){
     return res;
 }
 
-struct offline{
-    int l,r,in,val;
-    bool isQuery = false; 
-}q[230005];
+int bit[30004];
 
-int bit[30005];
+void update(int i){
+    for(; i < 30004; i += i&(-i)){
+        bit[i] += 1;
+    }
+    return;
+}
 
 int query(int i){
     int sum = 0;
@@ -62,49 +64,36 @@ int query(int i){
     return sum;
 }
 
-void update(int i){
-    for(; i < 30005; i+=i&(-i)){
-        bit[i] += 1;
-    }
-    return;
-}
-
-signed main(void){
+signed main(void)
+{
     ios;
     #ifndef ONLINE_JUDGE
-        freopen("../in.txt","r",stdin); 
+        freopen("../in.txt","r",stdin);
     #endif
-    int n,siz = 0;
-    cin >> n;
-    for(siz = 0; siz < n; siz++){
-        cin >> q[siz].val;
-        q[siz].l = numeric_limits<int>::max();
-        q[siz].in = siz;
-    }
-    int qq;
-    cin >> qq;
-    for(int i = 0; i < qq; i++){
-        cin >> q[siz].l >> q[siz].r >> q[siz].val; 
-        q[siz].l --;
-        q[siz].r--;
-        q[siz].isQuery = true;
-        q[siz].in = i;
-        siz++;
-    }
-    vector<int> ans(qq);
-    sort(q,q + siz,[](offline a,offline b) -> bool {
-        if(a.val != b.val)
-            return a.val > b.val;
-        return a.l < b.l;
-    });
-    for(int i = 0; i < siz; i++){
-        if(q[i].isQuery){
-            ans[q[i].in] = query(q[i].r + 1) - query(q[i].l);
-        }else
-            update(q[i].in + 1);
-    }
-    for(int i : ans){
-        cout << i << endl;
-    }
+    tc{
+        memset(bit,0,sizeof(bit));
+        int n;
+        cin >> n;
+        unordered_map<string,int>m;
+        string s[n];
+        int a[n];
+        for(int i = 0; i < n; i++){
+            cin >> s[i];
+        }
+        for(int i = 0; i < n; i++){
+            string aux;
+            cin >> aux;
+            m[aux] = i + 1;
+        }
+        for(int i = 0; i < n; i++){
+            a[i] = m[s[i]];
+        }
+        int ans = 0;
+        for(int i = n - 1; i >= 0; i--){
+            ans += query(a[i]);
+            update(a[i]);
+        }
+        cout << ans << endl;
+    }      
     return 0;
 }
