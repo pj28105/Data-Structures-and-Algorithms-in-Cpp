@@ -1,0 +1,21 @@
+if you are given a square grid then total squares in that grid would be
+sum(n*n) where n goes from 1 to n
+
+for eg- in 8 x 8 total squares are 
+    8 * 8 + 7 * 7 + 6 * 6 ...... + 1 * 1
+
+Logic -> In 8 x 8 gird there are 9 vertical and horizontal lines now count one by one the total squares of variable sizes
+total 1 x 1 squares in 8 x 8 grid are 64 (8 vertical and 8 horizontal lines are possible)
+total 2 x 2 squares in 8 x 8 grid are 49  (7 vertical and 7 horizontal lines are possible)
+
+
+To count total rectanges in 8 x 8 grid 
+formula is 9C2 * 9C2 
+
+Logic -> You can select any two horizontal and vertical lines to form rectangle 
+Note -> A square is also a rectangles
+
+Vedio link->
+https://www.youtube.com/watch?v=ZHFn0iP5hu8&list=PLbu_fGT0MPssMPJuhGZfYKn6MVqcDUjwJ&index=3
+
+time-> 36min
