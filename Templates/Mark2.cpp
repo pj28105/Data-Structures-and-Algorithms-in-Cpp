@@ -1,5 +1,4 @@
 // PJ28105
-// MARK 2
 
 #include <iostream>
 #include <cstring>
@@ -34,6 +33,10 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #else
 #define deb(...)
 #endif
+
+// Dirty Fix
+// #define int long long
+
 
 ll power(ll a,ll b){
     ll res = 1;
