@@ -1,5 +1,5 @@
+// https://www.hackerearth.com/practice/data-structures/advanced-data-structures/trie-keyword-tree/practice-problems/algorithm/search-engine/description/
 // PJ28105
-// MARK 2
 
 #include <iostream>
 #include <cstring>
@@ -47,12 +47,56 @@ ll power(ll a,ll b){
     return res;
 }
 
+class Trie{
+    public:
+        unordered_map<char,Trie*> ch;
+        int w;
+        Trie(){
+            this->w = -1;
+        }
+};
+
+void insert(string s,Trie *root,int we){
+    for(int i = 0; i < s.length(); i++){
+        if(root->ch.find(s[i]) == root->ch.end()){
+            root->ch[s[i]] = new Trie();
+        }
+        root = root->ch[s[i]];
+        root->w = max(root->w,we);
+    }
+    return;
+}
+
+int query(Trie *root,string s){
+    for(int i = 0; i < s.length(); i++){
+        if(root->ch.find(s[i]) == root->ch.end()){
+            return -1;
+        }
+        root = root->ch[s[i]];
+    }
+    return root->w;
+}
+
 signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
         freopen("../in.txt","r",stdin);
     #endif
-       
+    int n,q;
+    cin >> n >> q; 
+    Trie *root = new Trie();
+    for(int i = 0; i < n; i++){
+        string s;
+        int we;
+        cin >> s >> we;
+        insert(s,root,we);
+    }
+    while(q--){
+        string s;
+        cin >> s;
+        int ans = query(root,s);
+        cout << ans << endl;
+    }
     return 0;
 }
