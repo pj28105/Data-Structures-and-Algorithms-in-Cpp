@@ -1,5 +1,13 @@
 {
     "files.associations": {
-        "set": "cpp"
+        "set": "cpp",
+        "array": "cpp",
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "functional": "cpp",
+        "random": "cpp",
+        "iomanip": "cpp",
+        "istream": "cpp",
+        "streambuf": "cpp"
     }
 }
