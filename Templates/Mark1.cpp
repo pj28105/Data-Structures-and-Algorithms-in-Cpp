@@ -1,5 +1,11 @@
-// PJ28105
-// MARK 1
+/*
+PJ28105
+    ###
+    #
+    ###
+      #
+    ### 
+*/ 
 
 #include <iostream>
 #include <cstring>
