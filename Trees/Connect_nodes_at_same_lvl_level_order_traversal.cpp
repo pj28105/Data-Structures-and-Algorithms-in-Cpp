@@ -1,10 +1,11 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 /*
+
     Problem link->
     https://practice.geeksforgeeks.org/problems/connect-nodes-at-same-level/1/?track=amazon-trees&batchId=192
-    This is constant space solution 
+    This problem can be solved in constant space check github for solution
     Code Tested on GFG
 */
 
@@ -159,30 +160,22 @@ int main()
 
 // Should set the nextRight for all nodes
 void connect(Node *p){
-    Node* leftMost = p;
-    while(leftMost){
-        Node* currp = leftMost,*currc = NULL;
-        leftMost = NULL;
-        while(currp){
-            if(currp->left){
-                if(currc){
-                    currc->nextRight = currp->left;
-                }
-                currc = currp->left;
+    queue<Node*> q;
+    q.push(p);
+    while(!q.empty()){
+        int n = q.size();
+        Node* prev = NULL;
+        while(n--){
+            Node* curr = q.front();
+            q.pop();
+            curr->nextRight = prev;
+            prev = curr;
+            if(curr->right){
+                q.push(curr->right);
             }
-            if(!leftMost){
-                leftMost = currc;
+            if(curr->left){
+                q.push(curr->left);
             }
-            if(currp->right){
-                if(currc){
-                    currc->nextRight = currp->right;
-                }
-                currc = currp->right;
-            }
-            if(!leftMost){
-                leftMost = currc;
-            }
-            currp = currp->nextRight;
         }
     }
     return;
