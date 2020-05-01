@@ -2,6 +2,9 @@
 using namespace std;
 
 /*
+    Problem link->
+    https://practice.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1/?track=amazon-trees&batchId=192
+    
     Vertical Order Traversal of Binary Tree
     Code tested on GFG
     for recursive solution check github but prefer iterative approach for these kind of

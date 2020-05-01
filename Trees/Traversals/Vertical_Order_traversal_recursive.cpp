@@ -2,6 +2,9 @@
 using namespace std;
 
 /*
+    Problem link->
+    https://practice.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1/?track=amazon-trees&batchId=192
+    
     Prefer these questions to do iteratively with level order traversal only!
     This question also teaches that use always stable_sort instead of sort in c++
     as sort may not be stable all the time but stable sort ensures stability in sorting.
