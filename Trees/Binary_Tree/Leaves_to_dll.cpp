@@ -5,7 +5,7 @@ using namespace std;
 /*
     problem link ->
     https://practice.geeksforgeeks.org/problems/leaves-to-dll/1
-    Linear space and tim
+    Linear space and time
 */
 
 // Tree Node
