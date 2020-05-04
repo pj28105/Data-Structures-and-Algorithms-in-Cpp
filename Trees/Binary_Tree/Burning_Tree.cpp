@@ -7,8 +7,8 @@ using namespace std;
 
     Linear space and linear time
     Problem link->
-    https://practice.geeksforgeeks.org/problems/burning-tree/1
-
+    https://practice.geeksforgeeks.org/problems/burning-tree/1/?track=amazon-trees&batchId=192
+    
     This idea of this problem is same as->
     https://practice.geeksforgeeks.org/problems/nodes-at-given-distance-in-binary-tree/1/?track=amazon-trees&batchId=192
 */
