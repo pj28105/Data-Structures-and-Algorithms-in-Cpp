@@ -4,13 +4,23 @@
 using namespace std;
 
 /*
-
     Linear space and linear time
     Problem link->
     https://practice.geeksforgeeks.org/problems/burning-tree/1/?track=amazon-trees&batchId=192
     
     This idea of this problem is same as->
     https://practice.geeksforgeeks.org/problems/nodes-at-given-distance-in-binary-tree/1/?track=amazon-trees&batchId=192
+
+    This solution has two versions->
+    1) First solution is optimized version which computes depth of right and left subtress for each node along with burning time
+    in single traversal of tree.
+
+    2) Second solution is less optimized which traverses the each node at most 2 times in worst case.
+
+    Overall complexity of both solution is linear space and time.
+
+    GFG solution=>
+    https://www.geeksforgeeks.org/minimum-time-to-burn-a-tree-starting-from-a-leaf-node/
 */
 
 struct Node {
@@ -88,50 +98,6 @@ Node *buildTree(string str) {
 }
 int minTime(Node* root, int target) ;
 
-
- // } Driver Code Ends
-
-void burndown(Node* root,int& ans,int bt){
-    if(!root){
-        return;
-    }
-    ans = max(bt,ans);
-    burndown(root->left,ans,bt + 1);
-    burndown(root->right,ans,bt + 1);
-    return;
-}
-
-int burn(Node*root,int&ans,int target){
-    if(!root){
-        return -1;
-    }
-    if(root->data == target){
-        return 1;
-    }
-    int lv = burn(root->left,ans,target);
-    int rv = burn(root->right,ans,target);
-    if(lv != -1){
-        ans = max(lv,ans);
-        burndown(root->right,ans,lv + 1);
-        return lv + 1;
-    }
-    if(rv != -1){
-        ans = max(rv,ans);
-        burndown(root->left,ans,rv + 1);
-        return rv + 1;
-    }
-    return -1;
-}
-//User function Template for C++
-int minTime(Node* root, int target) {
-    int ans = 0;
-    burn(root,ans,target);
-    return ans;
-}
-
-// { Driver Code Starts.
-
-
 int main() 
 {
     int tc;
@@ -155,3 +121,94 @@ int main()
 
     return 0;
 }
+
+ // } Driver Code Ends
+
+
+/***********************
+ Below is the optimized version
+ 1st solution
+***********************/
+
+ int burn(Node*root,int&ans,int target,unordered_map<Node*,pair<int,int>>&ma){
+    if(!root){
+        return -1;
+    }
+    if(!root->left && !root->right){
+        ma[root] = {0,0};
+        if(root->data == target){
+            return 1;
+        }
+        return -1;
+    }
+    int lv = burn(root->left,ans,target,ma);
+    int rv = burn(root->right,ans,target,ma);
+    
+    int ldepth = root->left == NULL ? 0: 1 + max(ma[root->left].first,ma[root->left].second); 
+    int rdepth = root->right == NULL ? 0: 1 + max(ma[root->right].first,ma[root->right].second); 
+    ma[root] = {ldepth,rdepth};
+    
+    if(lv != -1){
+        ans = max(lv + ma[root].second,ans);
+        return lv + 1;
+    }
+    if(rv != -1){
+        ans = max(rv + ma[root].first,ans);
+        return rv + 1;
+    }
+    return -1;
+}
+//User function Template for C++
+int minTime(Node* root, int target) {
+    unordered_map<Node*,pair<int,int>>ma;
+    int ans = 0;
+    burn(root,ans,target,ma);
+    return ans;
+}
+
+
+/***********************
+ Below is the unoptimized version
+ 2nd solution
+***********************/
+
+// void burndown(Node* root,int& ans,int bt){
+//     if(!root){
+//         return;
+//     }
+//     ans = max(bt,ans);
+//     burndown(root->left,ans,bt + 1);
+//     burndown(root->right,ans,bt + 1);
+//     return;
+// }
+
+// int burn(Node*root,int&ans,int target){
+//     if(!root){
+//         return -1;
+//     }
+//     if(root->data == target){
+//         return 1;
+//     }
+//     int lv = burn(root->left,ans,target);
+//     int rv = burn(root->right,ans,target);
+//     if(lv != -1){
+//         ans = max(lv,ans);
+//         burndown(root->right,ans,lv + 1);
+//         return lv + 1;
+//     }
+//     if(rv != -1){
+//         ans = max(rv,ans);
+//         burndown(root->left,ans,rv + 1);
+//         return rv + 1;
+//     }
+//     return -1;
+// }
+
+
+
+// //User function Template for C++
+// int minTime(Node* root, int target) {
+//     int ans = 0;
+//     burn(root,ans,target);
+//     return ans;
+// }
