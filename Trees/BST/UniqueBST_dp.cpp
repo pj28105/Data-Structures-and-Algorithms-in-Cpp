@@ -3,6 +3,9 @@ using namespace std;
 /*
     Problem link->
         https://practice.geeksforgeeks.org/problems/unique-bsts-1587115621/1/?track=amazon-bst&batchId=192
+
+    This is dp solution of the problem it can also be solved using catalan numbers formula
+        with fermats little theorem.(Check github repo for that)
 */
 
 const int mod = 1e9 + 7;
