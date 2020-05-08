@@ -6,8 +6,12 @@ using namespace std;
     Poblem link->
     https://practice.geeksforgeeks.org/problems/find-a-pair-with-given-target-in-bst/1
 
+    I assumed that nodes in bst are distinct!
+
     This solution is linear in time but uses o(h1+h2) space which is logn for balanced binary
         search trees
+
+    Code tested on leetcode and GFG
 */
 
 // Tree Node
