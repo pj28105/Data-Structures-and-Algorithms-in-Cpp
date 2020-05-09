@@ -7,6 +7,8 @@ using namespace std;
 
     This is dp version of this problem.
     But use bfs appraoch this approach is little tricky!
+    Don't look at GFG solution for this problem it fails for some testcases because 
+    memoization process of that solution is wrong.
 
     Note-> For memoization logic look at comments in code!
 

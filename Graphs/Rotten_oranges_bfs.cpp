@@ -11,40 +11,46 @@ using namespace std;
 */
 
 int rotOranges(vector<vector<int> > a, int r, int c){
-    queue<pair<int,int>>q;
-    vector<vector<int>> time(r,vector<int>(c,INT_MAX));
+        queue<pair<int,int>>q;
     for(int i = 0; i < r; i++){
         for(int j = 0; j < c; j++){
             if(a[i][j] == 2){
                 q.push({i,j});
-                time[i][j] = 0;
-            }
-        }
-    }
-    int dir[4][2] = {{-1,0},{1,0},{0,-1},{0,1}};
-    while(!q.empty()){
-        pair<int,int> curr = q.front();
-        q.pop();
-        for(int k = 0; k < 4; k++){
-            int i = curr.first + dir[k][0];
-            int j = curr.second + dir[k][1];
-            if(i >= 0 && j >= 0 && i < r && j < c){
-                if(a[i][j] == 1 && (time[curr.first][curr.second] + 1) < time[i][j]){
-                    time[i][j] = time[curr.first][curr.second] + 1;
-                    q.push({i,j});
-                }
             }
         }
     }
     int ans = 0;
-    for(int i = 0; i < r; i++){
-        for(int j = 0; j < c; j++){
-            if(a[i][j] == 1){
-                ans = max(ans,time[i][j]);
+    int dir[4][2] = {{-1,0},{1,0},{0,-1},{0,1}};
+    while(!q.empty()){
+        int n = q.size();
+        bool change = 0;
+        while(n--){
+            pair<int,int> curr = q.front();
+            q.pop();
+            for(int k = 0; k < 4; k++){
+                int i = curr.first + dir[k][0];
+                int j = curr.second + dir[k][1];
+                if(i >= 0 && j >= 0 && i < r && j < c){
+                    if(a[i][j] == 1){
+                        a[i][j] = 2;
+                        if(!change){
+                            ans++;
+                            change = 1;
+                        }
+                        q.push({i,j});
+                    }
+                }
             }
         }
     }
-    return ans == INT_MAX ? -1 : ans;
+    for(int i = 0; i < r; i++){
+        for(int j = 0; j < c; j++){
+            if(a[i][j] == 1){
+                return -1;
+            }
+        }
+    }
+    return ans;
 }
 
 int main()
