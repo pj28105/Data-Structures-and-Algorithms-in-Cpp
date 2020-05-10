@@ -7,6 +7,8 @@ using namespace std;
 
     Perform DFS traversal of the given graph. While doing traversal keep track of last finished vertex ‘v’.
     If there exist mother vertex, then v must be one. Check if v is a mother vertex by performing DFS/BFS from v.
+
+    Tested on GFG
 */
 
 

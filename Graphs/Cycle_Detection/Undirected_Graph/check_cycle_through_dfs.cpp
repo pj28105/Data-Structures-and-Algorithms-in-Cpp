@@ -8,6 +8,8 @@ using namespace std;
 
     Most simplest way to find cycle in an undirected graph.
     This solution also help us to detect self loop in graph.
+
+    Tested on GFG
 */
 
 bool dfs(int s,bool vis[],vector<int>g[],int parent){
@@ -61,4 +63,3 @@ int main()
 
     }
 }
- 
