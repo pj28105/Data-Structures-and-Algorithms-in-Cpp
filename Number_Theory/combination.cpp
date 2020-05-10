@@ -76,6 +76,7 @@ ll power(ll a,ll b){
    
 void preCompute(){
     fact[0] = 1;
+    invfact[0] = 1;
     for(int i = 1; i < MAX; i++){
         fact[i] = ((fact[i - 1] % mod) * (i % mod)) % mod;
         invfact[i] = power(fact[i],mod - 2);
@@ -95,6 +96,6 @@ signed main(void)
         freopen("../in.txt","r",stdin);
     #endif
     preCompute();
-    cout << comb(2000,5) << endl;
+    cout << comb(30,1) << endl;
     return 0;
 }
