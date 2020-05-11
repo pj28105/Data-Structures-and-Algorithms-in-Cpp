@@ -8,6 +8,7 @@ using namespace std;
     This problem can also be solved with dp (check dp folder on github)!
 
     Tested on GFG
+    Similar logic got accepted on leetcode as well. (0-1 Matrix leetcode problem)
 */
 
 
