@@ -1,10 +1,14 @@
 #include<bits/stdc++.h>
 using namespace std;
 /*
-
     Problem link->
         https://leetcode.com/problems/word-ladder-ii/
 
+    1) This Solution is not much optimize and it is harder to implement as it requires (BFS,DFS,DP)
+     See optimized solution on github . Source of solution is from interviewbit
+     https://www.interviewbit.com/problems/word-ladder-ii/
+
+     Tested on Leetcode
 */
 
 map<pair<int,string>,vector<vector<string>>>dp; 
