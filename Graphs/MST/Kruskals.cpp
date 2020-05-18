@@ -4,6 +4,7 @@ using namespace std;
     Problem link ->
     https://practice.geeksforgeeks.org/problems/minimum-spanning-tree/1
 
+    Complexity -> O(ELogE + ELogV) (ELogE -> Sorting , ELogV -> Union or Cycle Detection)
     Tested on GFG
 */
 

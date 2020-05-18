@@ -1,48 +1,52 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-
 /*
     Problem link->
-    https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/tutorial/
-
+    https://www.hackerearth.com/practice/algorithms/graphs/shortest-path-algorithms/tutorial/
 
     Complexity -> O((E + V)Log(V)) (For Binary Heap or priority_queue)
     Can be more optimized to O(E + VLogV) (For Fibonacci Heap which has update as O(1))
-	
+    
+    Note-> Implemented for directed Graph
     Tested on Hackerearth
 */
+typedef long long ll;
+const ll inf = 1e18;
 
 int main(void){
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
 	int v,e;
 	cin >> v >> e;
-	vector<pair<ll,ll>> g[v];
+	vector<pair<ll,ll>>g[v];
 	for(int i = 0; i < e; i++){
 		ll a,b,w;
 		cin >> a >> b >> w;
 		a--,b--;
-		g[a].push_back({w,b});
-		g[b].push_back({w,a});
+		g[a].push_back({ w,b });
 	}
 	vector<bool> vis(v,0);
+	vector<ll> dist(v,inf);
 	priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>>q;
-	q.push({0,0});
-	ll cost = 0;
+	q.push({ 0,0 });
+	dist[0] = 0;
 	while(!q.empty()){
 		pair<ll,ll> curr = q.top();
 		q.pop();
 		if(!vis[curr.second]){
 			vis[curr.second] = 1;
-			cost += curr.first;
 			for(auto v : g[curr.second]){
-				if(!vis[v.second]){
-					q.push({v.first,v.second});
+				if(!vis[v.second] && dist[v.second] > (dist[curr.second] + v.first)){
+					dist[v.second] = dist[curr.second] + v.first;
+					q.push({ dist[v.second], v.second});
 				}
 			}
 		}
 	}
-	cout << cost << endl;
+	for(int i = 1; i < v; i++){
+		if(dist[i] == inf){
+			cout << 1e9 << " ";
+		}else{
+			cout << dist[i] << " ";
+		}
+	}
+	cout << endl;
 }
