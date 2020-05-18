@@ -8,7 +8,12 @@ const int inf = INT_MAX;
         https://practice.geeksforgeeks.org/problems/implementing-floyd-warshall/0
     Article link->
         https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/
-        
+
+    Note->   
+    1) Floyd warshall and Bellman ford can detect negative cycles too!
+        Article link
+            https://www.geeksforgeeks.org/detecting-negative-cycle-using-floyd-warshall/
+    2)If shortest path for vertex v - v is negative then graph has negative cycle!
     Tested on GFG
 */
 int main(){

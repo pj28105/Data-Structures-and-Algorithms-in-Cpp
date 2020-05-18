@@ -8,6 +8,9 @@ using namespace std;
     Can be more optimized to O(E + VLogV) (For Fibonacci Heap which has update as O(1))
     
     Note-> Implemented for directed Graph
+		2)Dijkstra Algorithm works for negative edges too! But it fails for graph with negative weight cycle because
+			it fails detecting the negative cycles!
+		3) Floyd warshall and Bellman ford can detect negative cycles too!
     Tested on Hackerearth
 */
 typedef long long ll;
