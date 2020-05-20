@@ -15,11 +15,11 @@ public:
         int sum = 0,ans = 0;
         ma[0] = 1;
         for(int i = 0; i < a.size(); i++){
-            if(a[i] >= 0){
-                sum = (sum + a[i]) % k;
-            }else{
-                sum = ((sum - (abs(a[i]) % k)) + k) % k;
-            }
+            /*
+                Remeber when -ve % +ve -> then output is -ve
+                sign of left operand gets preference
+            */
+            sum += (sum % k + k) % k;
             ans += ma[sum];
             ma[sum]++;
         }   
