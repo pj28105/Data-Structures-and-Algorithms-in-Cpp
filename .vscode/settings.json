@@ -8,6 +8,7 @@
         "random": "cpp",
         "iomanip": "cpp",
         "istream": "cpp",
-        "streambuf": "cpp"
+        "streambuf": "cpp",
+        "ostream": "cpp"
     }
 }
