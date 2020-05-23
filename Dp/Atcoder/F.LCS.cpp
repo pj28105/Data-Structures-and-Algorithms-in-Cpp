@@ -43,6 +43,6 @@ int main(void)
             break;
         }
     }
-    cout << ans << " "<< endl;
+    cout << ans << endl;
     return 0;
 }
