@@ -15,7 +15,7 @@ using namespace std;
  
 #define mod 1000000007
 #define ll long long
-#define tc int t; cin >> t; while(t--)
+#define tc int t; cin >> t; for(int tt = 1; tt <= t; tt++)
 #define ios ios_base::sync_with_stdio(false);cin.tie(NULL);
 #define ERR
 #ifdef ERR
@@ -31,13 +31,42 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #else
 #define deb(...)
 #endif
- 
+
+// Dirty Fix
+// #define int long long
+
+
+ll power(ll a,ll b){
+    ll res = 1;
+    while(b > 0){
+        if(b & 1){
+            res = ((res % mod) * (a % mod)) % mod;
+        }
+        b = b >> 1;
+        a = ((a % mod) * (a % mod)) % mod; 
+    }
+    return res;
+}
+
 signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
-        freopen("../in.txt","r",stdin);
+      //  freopen("../in.txt","r",stdin);
     #endif
-
+    int n,w;
+    cin >> n >> w;
+    vector<pair<long long,long long>> a(n);
+    for(int i = 0; i < n; i++){
+        cin >> a[i].first >> a[i].second;
+    }
+    vector<ll> dp(w + 1);
+    for(int i = 0; i < n; i++){
+        for(int j = w; j >= 0; j--){
+            if(j >= a[i].first)
+                dp[j] = max(dp[j],a[i].second + dp[j - a[i].first]);
+        }
+    }
+    cout << dp[w] << endl;
     return 0;
 }

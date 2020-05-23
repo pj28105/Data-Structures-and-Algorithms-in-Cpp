@@ -1,12 +1,3 @@
-/*
-PJ28105
-    ###
-    #
-    ###
-      #
-    ### 
-*/ 
-
 #include <iostream>
 #include <cstring>
 #include <vector>
