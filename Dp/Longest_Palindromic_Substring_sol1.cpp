@@ -4,6 +4,7 @@ using namespace std;
     Problem link->
         https://practice.geeksforgeeks.org/problems/longest-palindrome-in-a-string2235/1/?track=amazon-dynamic-programming&batchId=192
     
+    Checkout its another solution which is more optimized in space complexity in DP folder!
     Tested on GFG and Leetcode!
 */
 class Solution {
