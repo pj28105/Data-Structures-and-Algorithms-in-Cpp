@@ -1,6 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+/*
+    Problem link->
+        https://www.spoj.com/problems/BUGLIFE/
+    
+    Tested on SPOJ
+*/
 bool dfs(vector<int>g[],vector<int>&color,int s,int c){
     color[s] = c;
     for(int v : g[s]){

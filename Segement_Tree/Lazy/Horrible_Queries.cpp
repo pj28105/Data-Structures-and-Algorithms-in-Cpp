@@ -1,6 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+/*
+    Problem Link->
+        https://www.spoj.com/problems/HORRIBLE/
+    
+    Tested on SPOJ
+*/
 typedef long long ll;
 ll seg[4*100002],lazy[4*100002];
 

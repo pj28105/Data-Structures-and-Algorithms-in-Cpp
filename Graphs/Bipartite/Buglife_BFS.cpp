@@ -1,6 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+/*
+    Problem link->
+        https://www.spoj.com/problems/BUGLIFE/
+    
+    Tested on SPOJ
+*/
 bool bfs(vector<int>g[],vector<bool>&vis,int s){
     queue<int>q;
     unordered_set<int>se[2];
