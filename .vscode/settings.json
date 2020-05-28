@@ -9,6 +9,7 @@
         "iomanip": "cpp",
         "istream": "cpp",
         "streambuf": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iostream": "cpp"
     }
 }
