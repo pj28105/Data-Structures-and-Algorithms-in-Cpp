@@ -1,20 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
+/*
+    Problem link->
+        https://www.spoj.com/problems/CAPCITY/  
 
-#define ERR
-#ifdef ERR
-#define deb(...) __f(#__VA_ARGS__, __VA_ARGS__)
-template <typename Arg1>
-void __f(const char* name, Arg1&& arg1){
-    cerr << name << " : " << arg1 << std::endl;
-}
-template <typename Arg1, typename... Args>
-void __f(const char* names, Arg1&& arg1, Args&&... args){
-    const char* comma = strchr(names + 1, ',');cerr.write(names, comma - names) << " : " << arg1<<" | ";__f(comma+1, args...);
-}
-#else
-#define deb(...)
-#endif
+    Tested on Spoj
+
+    Note->  
+    1) You can either do Four DFS traversals for first two computing for scc.
+    And next two for finding mother component in transpose graph! (Checkout Mother vertex problem)
+
+    2) Instead of four DFS you can simply check indegree of components if components in the tranpose graph 
+        with indegree zero are greater than 1 then capital city can't exists else print the component 
+        with indegree zero.
+*/
 
 void dfs1(int s,vector<int>g[],stack<int>&st,vector<bool>&vis){
     vis[s] = 1;
@@ -38,7 +37,6 @@ void dfs2(int s,vector<int>tg[],vector<bool>&vis,unordered_map<int,int>&ma,int c
 }
 
 int main(void){
-    freopen("in.txt","r",stdin);
     int v,e;
     cin >> v >> e;
     vector<int>g[v],tg[v];
