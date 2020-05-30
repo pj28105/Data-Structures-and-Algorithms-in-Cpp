@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+/*
+    Problem link->
+        https://www.spoj.com/problems/GONE/
+
+    Tested on SPOJ
+*/
 
 const int MAX = 85; 
 vector<int>primes;
