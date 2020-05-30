@@ -1,6 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+/*
+    Problem link->
+        https://www.hackerearth.com/problem/algorithm/benny-and-the-broken-odometer/editorial/
+    
+    Tested on Hackerearth
+*/
 void getDigits(int a,vector<int>&dig){
     while(a > 0){
         dig.push_back(a % 10);
