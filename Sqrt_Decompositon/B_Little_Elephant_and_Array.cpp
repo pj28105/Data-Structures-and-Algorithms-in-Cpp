@@ -55,9 +55,9 @@ const int blk_size = 318;
 signed main(void)
 {
     ios;
-    #ifndef ONLINE_JUDGE
-        freopen("../in.txt","r",stdin);
-    #endif
+    // #ifndef ONLINE_JUDGE
+    //    freopen("../in.txt","r",stdin);
+    // #endif
     int n,m;
     cin >> n >> m;
     int a[n];
@@ -70,10 +70,10 @@ signed main(void)
         q[i].r--;
         q[i].in = i;
     }
-    sort(q,q+m,[](query a,query b) -> bool{
-        if((a.l/blk_size) != (b.l/blk_size))
-            return (a.l/blk_size) < (b.l/blk_size);
-        return a.r < b.r;
+    sort(q,q+m,[](query aa,query b) -> bool{
+        if((aa.l/blk_size) != (b.l/blk_size))
+            return (aa.l/blk_size) < (b.l/blk_size);
+        return aa.r < b.r;
     });
     unordered_map<int,int>ma;
     unordered_set<int> se;
