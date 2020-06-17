@@ -3,16 +3,17 @@ using namespace std;
 /*
     Problem link->
         https://practice.geeksforgeeks.org/problems/max-length-chain/1
-    
-    Tested on GFG!
+
+    Tested on GFG
     Note->
-    1) It can be solved with greedy too in o(nlogn), check out its solution in Greedy folder!
-    2) This problem is a variant of activity selection problem.
+    1) This problem is a variant of activity selection problem.
+    2) It can be solved with dp too in o(n^2) check out its solution in DP folder!
 */
 struct val{
 	int first;
 	int second;
 };
+
 
 
 int maxChainLen(struct val p[],int n);
@@ -36,18 +37,16 @@ int main() {
 
 int maxChainLen(struct val a[],int n){
     sort(a,a + n,[](val x,val y)->bool{
-        if(x.first != y.first)
-            return x.first <= y.first;
-        return x.second <= y.second;
+        if(x.second != y.second)
+            return x.second <= y.second;
+        return x.first <= y.first;
     });
-    int dp[n],ans = 0;
+    int ans = 0,currst = -1;
     for(int i = 0; i < n; i++){
-        dp[i] = 1;
-        for(int j = i - 1; j >= 0; j--){
-            if(a[i].first > a[j].second)
-                dp[i] = max(dp[i],1 + dp[j]);
+        if(a[i].first > currst){
+            currst = a[i].second;
+            ans++;
         }
-        ans = max(dp[i],ans);
     }
     return ans;
 }
