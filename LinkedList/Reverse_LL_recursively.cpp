@@ -1,6 +1,3 @@
-//Initial Template for C++
-
-// C program to find n'th Node in linked list
 #include <stdio.h>
 #include <stdlib.h>
 #include<iostream>
