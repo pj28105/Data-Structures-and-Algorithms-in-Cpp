@@ -23,7 +23,6 @@ public:
     
     string check(string s,int len){
         int n = s.length();
-        int hash[n];
         unordered_map<int,int>ma;
         int currhash = 0;
         for(int i = 0; i < len; i++){
@@ -50,6 +49,7 @@ public:
     string longestDupSubstring(string s) {
         if(!isComputed){
             pre();
+            isComputed = 1;
         }
         int st = 1,e = s.length();
         string ans = "";
