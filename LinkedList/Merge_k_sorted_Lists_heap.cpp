@@ -16,8 +16,8 @@ using namespace std;
 */
 
 struct comp{    
-    bool operator()(const pair<int,ListNode*> a,const pair<int,ListNode*> b) const{
-        return a.first >= b.first;
+    bool operator()(const ListNode* a,const ListNode* b) const{
+        return a->val >= b->val;
     }   
 };
 
@@ -25,21 +25,21 @@ class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& a) {
        int n = a.size();
-        priority_queue<pair<int,ListNode*>,vector<pair<int,ListNode*>>,comp>q;
+       priority_queue<ListNode*,vector<ListNode*>,comp>q;
        for(int i = 0; i < n; i++){
            if(a[i]){
-               q.push({a[i]->val,a[i]});
+               q.push(a[i]);
            }
        }
        ListNode* dummy = new ListNode(-1);
        ListNode* curr = dummy;
        while(!q.empty()){
-           pair<int,ListNode*> best = q.top();
+           ListNode* best = q.top();
            q.pop();
-           curr->next = best.second;
-           curr = best.second;
-           if(best.second->next){
-               q.push({best.second->next->val,best.second->next});
+           curr->next = best;
+           curr = best;
+           if(best->next){
+               q.push(best->next);
            }
        }
        return dummy->next;
