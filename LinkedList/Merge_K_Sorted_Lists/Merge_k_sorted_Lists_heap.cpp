@@ -11,7 +11,9 @@ using namespace std;
     2) This problem has anothen approach which solves this problem in O(NlogN) time and O(1) space
         Solution link->
             https://leetcode.com/problems/merge-k-sorted-lists/solution/
-
+            
+        Or
+            Go to github for optimal solution!
     Tested on Leetcode!
 */
 

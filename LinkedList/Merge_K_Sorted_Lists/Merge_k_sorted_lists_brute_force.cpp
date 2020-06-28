@@ -7,7 +7,7 @@ using namespace std;
     1) Time complexity -> O(K*N)
     2) Space Complexity -> O(1) 
 
-    Do check out its heap version! ,on github!
+    Do check out its heap version and best solution! ,on github!
 
     Tested on GFG
 */
