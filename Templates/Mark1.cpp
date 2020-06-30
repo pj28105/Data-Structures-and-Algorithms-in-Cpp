@@ -31,8 +31,20 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #else
 #define deb(...)
 #endif
- 
-signed main(void)
+
+ll power(ll a,ll b){
+    ll res = 1;
+    while(b > 0){
+        if(b & 1){
+            res = ((res % mod) * (a % mod)) % mod;
+        }
+        b = b >> 1;
+        a = ((a % mod) * (a % mod)) % mod; 
+    }
+    return res;
+}
+
+int main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE

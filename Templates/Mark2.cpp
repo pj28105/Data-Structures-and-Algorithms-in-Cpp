@@ -35,25 +35,12 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 // Dirty Fix
 // #define int long long
 
-
-ll power(ll a,ll b){
-    ll res = 1;
-    while(b > 0){
-        if(b & 1){
-            res = ((res % mod) * (a % mod)) % mod;
-        }
-        b = b >> 1;
-        a = ((a % mod) * (a % mod)) % mod; 
-    }
-    return res;
-}
-
 signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
         freopen("../in.txt","r",stdin);
     #endif
-       
+    
     return 0;
 }
