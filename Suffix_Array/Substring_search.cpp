@@ -31,12 +31,12 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #else
 #define deb(...)
 #endif
- 
+
 // Dirty Fix
 // #define int long long
- 
+
+
 void count_sort(vector<int>&p,vector<int>&c){
-    // sorting array p with respect to array c!
     int n = p.size(),cnt[n];
     memset(cnt,0,sizeof(cnt));
     for(int i = 0; i < n; i++){
@@ -57,18 +57,43 @@ void count_sort(vector<int>&p,vector<int>&c){
     p = new_p;
     return;
 }
- 
+
+bool isSubstring(vector<int>&p,string s,string x){
+    int n = p.size();
+    int st = 0,se = n - 1;
+    while(st <= se){
+        int mid = st + (se - st)/2;
+        int matchCount = 0;
+        for(int i = 0; i < int(x.length()); i++){
+            char curr = s[(p[mid] + i) % n]; 
+            if(curr != x[i]){
+                if(curr > x[i]){
+                    se = mid - 1;
+                }else{
+                    st = mid + 1;
+                }
+                break;
+            }
+            matchCount++;
+        }
+        if(matchCount == int(x.length())){
+            return true;
+        }
+    }
+    return false;
+}
+
 signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
-        //freopen("in.txt","r",stdin);
+       freopen("in.txt","r",stdin);
     #endif
     string s;
     cin >> s;
     s += '$';
     ll k = 0,n = s.length();
-    vector<int> c(n),p(n);
+    vector<int>c(n),p(n);
     {
         vector<pair<int,int>> a(n);
         for(int i = 0; i < n; i++){
@@ -77,35 +102,38 @@ signed main(void)
         sort(a.begin(),a.end());
         c[a[0].second] = 0;
         p[0] = a[0].second;
-        for(int i = 1; i < int(a.size()); i++){
+        for(int i = 1; i < n; i++){
             p[i] = a[i].second;
-            if(a[i - 1].first != a[i].first){
-                c[a[i].second] = c[a[i - 1].second] + 1;
-            }else{
+            if(a[i].first == a[i - 1].first){
                 c[a[i].second] = c[a[i - 1].second];
+            }else{
+                c[a[i].second] = c[a[i - 1].second] + 1;
             }
-        } 
+        }
     }
     while((1ll << k) < n){
-        for(int i = 0; i < int(p.size()); i++){
+        for(int i = 0; i < n; i++){
             p[i] = (p[i] - (1ll << k) + n) % n;
         }
         count_sort(p,c);
-        vector<int> new_c(n);
+        vector<int>new_c(n);
         new_c[p[0]] = 0;
-        for(int i = 1; i < int(p.size()); i++){
+        for(int i = 1; i < n; i++){
             if(c[p[i]] == c[p[i - 1]] && c[(p[i] + (1ll << k)) % n] == c[(p[i - 1] + (1ll << k)) % n]){
                 new_c[p[i]] = new_c[p[i - 1]];
             }else{
-                new_c[p[i]] = new_c[p[i - 1]] + 1;
+                new_c[p[i]] = 1 + new_c[p[i - 1]];
             }
         }
-        c = new_c;    
-        k++;   
-    } 
-    for(int i = 0; i < n; i++){
-        cout << p[i] << " ";
+        c = new_c;
+        k++;
     }
-    cout << endl;
+    ll q;
+    cin >> q;
+    while(q--){
+        string x;
+        cin >> x;
+        cout << (isSubstring(p,s,x) == 1 ? "Yes" : "No") << endl;
+    }
     return 0;
 }
