@@ -7,17 +7,10 @@ int rand(int a, int b) {
 
 int main(int argc, char* argv[]) {
     srand(atoi(argv[1])); // atoi(s) converts an array of chars to int
-    int n = rand(2, 10);
-    printf("%d\n", n);
-    set<int> used;
+    int n = rand(2, 100);
     for(int i = 0; i < n; ++i) {
-        int x;
-        do {
-            x = rand(1, 10);
-        } while(used.count(x));
-        printf("%d ", x);
-        used.insert(x);
+        char x = 'a' + rand(0,25);
+        printf("%c", x);
     }
-    puts("");
+    printf("\n");
 }
-    

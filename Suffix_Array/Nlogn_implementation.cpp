@@ -31,67 +31,80 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #else
 #define deb(...)
 #endif
-
+ 
 // Dirty Fix
 // #define int long long
-
-/*
-    Problem link->
-        https://codeforces.com/edu/course/2/lesson/2/1/practice/contest/269100/problem/A
-
-    Tested on Codeforces
-*/
-
+ 
+void count_sort(vector<int>&p,vector<int>&c){
+    // sorting array p with respect to array c!
+    int n = p.size(),cnt[n];
+    memset(cnt,0,sizeof(cnt));
+    for(int i = 0; i < n; i++){
+        cnt[c[p[i]]]++;
+    }
+    int start_pos = 0;
+    for(int i = 0; i < n; i++){
+        int prev = cnt[i];
+        cnt[i] = start_pos;
+        start_pos += prev;
+    }
+    vector<int>new_p(n);
+    for(int i = 0; i < n; i++){
+        int ele = c[p[i]];
+        new_p[cnt[ele]] = p[i];
+        cnt[ele]++;
+    }
+    p = new_p;
+    return;
+}
+ 
 signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
-       freopen("in.txt","r",stdin);
+        freopen("in.txt","r",stdin);
     #endif
     string s;
     cin >> s;
     s += '$';
     ll k = 0,n = s.length();
-    vector<int> p(n),c(n);
-
-    // Computing for K == 0
+    vector<int> c(n),p(n);
     {
         vector<pair<int,int>> a(n);
         for(int i = 0; i < n; i++){
             a[i] = {s[i],i};
         }
-        stable_sort(a.begin(),a.end());
+        sort(a.begin(),a.end());
         c[a[0].second] = 0;
         p[0] = a[0].second;
         for(int i = 1; i < int(a.size()); i++){
             p[i] = a[i].second;
-            if(a[i].first == a[i - 1].first){
-                c[a[i].second] = c[a[i - 1].second];
+            if(a[i - 1].first != a[i].first){
+                c[a[i].second] = c[a[i - 1].second] + 1;
             }else{
-                c[a[i].second] = 1 + c[a[i - 1].second];
+                c[a[i].second] = c[a[i - 1].second];
             }
-        }
+        } 
     }
     while((1ll << k) < n){
-        vector<pair<pair<int,int>,int>> a(n);
-        for(int i = 0; i < n; i++){
-            a[i] = {{c[i],c[(i + (1ll << k)) % n]},i};
-        }     
-        stable_sort(a.begin(),a.end());
-        c[a[0].second] = 0;
-        p[0] = a[0].second;
-        for(int i = 1; i < int(a.size()); i++){
-            p[i] = a[i].second;
-            if(a[i - 1].first == a[i].first){
-                c[a[i].second] = c[a[i - 1].second];
+        for(int i = 0; i < int(p.size()); i++){
+            p[i] = (p[i] - (1ll << k) + n) % n;
+        }
+        count_sort(p,c);
+        vector<int> new_c(n);
+        new_c[p[0]] = 0;
+        for(int i = 1; i < int(p.size()); i++){
+            if(c[p[i]] == c[p[i - 1]] && c[(p[i] + (1ll << k)) % n] == c[(p[i - 1] + (1ll << k)) % n]){
+                new_c[p[i]] = new_c[p[i - 1]];
             }else{
-                c[a[i].second] = c[a[i - 1].second] + 1;
+                new_c[p[i]] = new_c[p[i - 1]] + 1;
             }
         }
-        k++;
-    }
-    for(int i : p){
-        cout << i << " ";
+        c = new_c;    
+        k++;   
+    } 
+    for(int i = 0; i < n; i++){
+        cout << p[i] << " ";
     }
     cout << endl;
     return 0;

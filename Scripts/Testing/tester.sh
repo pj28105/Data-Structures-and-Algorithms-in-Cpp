@@ -1,5 +1,9 @@
 for((i = 1; ; ++i)); do
-    echo $i
-    ./gen $i > int
-    diff -w <(./a < int) <(./brute < int) || break
+    echo "Test "$i
+    cat in.txt
+    ./gen $i > in.txt
+    diff -w <(./a < in.txt) <(./brute < in.txt) || break
+    echo "Passed test "$i
+    echo "***************************************************"
 done
+echo "Failed on test "$i
