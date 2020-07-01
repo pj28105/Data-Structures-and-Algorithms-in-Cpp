@@ -62,7 +62,7 @@ signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
-        //freopen("in.txt","r",stdin);
+        freopen("in.txt","r",stdin);
     #endif
     string s;
     cin >> s;
