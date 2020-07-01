@@ -36,9 +36,10 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 // #define int long long
 /*
     Problem link->
-       https://codeforces.com/edu/course/2/lesson/2/5/practice/contest/269656/problem/A
-       
+        https://codeforces.com/edu/course/2/lesson/2/5/practice/contest/269656/problem/B
+
     Tested on Codeforces
+    Warning Codeforces has weak testcase for this problem!
 */
 void count_sort(vector<int>&p,vector<int>&c){
     int n = p.size();
@@ -66,11 +67,11 @@ signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
-        freopen("../in.txt","r",stdin);
+        freopen("in.txt","r",stdin);
     #endif
-    string s;
-    cin >> s;
-    s += '$';
+    string str,str1;
+    cin >> str >> str1;
+    string s = str + '&' + str1 + '$';
     ll k = 0,n = s.length();
     vector<int> c(n),p(n);
     {
@@ -110,22 +111,34 @@ signed main(void)
         mask = (1ll << k);
     }
     vector<int> lcp(n - 1);
-    ll matched = 0;
+    ll matched = 0,len = 0,max_pos = -1;
     for(int i = 0; i < n - 1; i++){
+        if(c[i] == 0){
+            continue;
+        }
         int prev_suffix = p[c[i] - 1]; 
         while(s[(i + matched)] == s[(prev_suffix + matched)]){
             matched++;
         }
+        // If they belong to different class then compare maxlength found so far..
+        if((prev_suffix > int(str.length()) && i < int(str.length()))
+                 || (prev_suffix < int(str.length()) && i > int(str.length()))){
+            if(len <= matched && matched > 0){
+                if(len < matched){
+                    max_pos = prev_suffix;
+                }else if(len == matched && c[i] <= c[max_pos]){
+                    max_pos = i;
+                }
+                len = matched;
+            }
+        }
         lcp[c[i] - 1] = matched;
         matched = max(0ll,matched - 1);
     }
-    ll ans = 0;
-    for(int i = 1; i < n; i++){
-        // Adding all substrings of the suffix
-        ans += (n - p[i] - 1);
-        // Substracting substrings which are already counted in the previous suffix
-        ans = ans - lcp[i - 1];
+    if(len == 0){
+        cout << "" << endl;
+    }else{
+        cout << s.substr(max_pos,len) << endl;
     }
-    cout << ans << endl;
     return 0;
 }
