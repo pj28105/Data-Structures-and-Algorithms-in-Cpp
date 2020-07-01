@@ -34,6 +34,12 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 
 // Dirty Fix
 // #define int long long
+/*
+    Problem link->
+        https://codeforces.com/edu/course/2/lesson/2/3/practice/contest/269118/problem/B
+
+    Tested on Codeforces! 
+*/
 
 void count_sort(vector<int>&p,vector<int>&c){
     int n = p.size(),cnt[n];

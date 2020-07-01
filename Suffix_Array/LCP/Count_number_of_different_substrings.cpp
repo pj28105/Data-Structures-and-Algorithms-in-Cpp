@@ -31,21 +31,18 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #else
 #define deb(...)
 #endif
- 
+
 // Dirty Fix
 // #define int long long
- 
- /*
+/*
     Problem link->
-        https://codeforces.com/edu/course/2/lesson/2/2/practice/contest/269103/problem/A
+        https://codeforces.com/edu/course/2/lesson/2/4/practice/contest/269119/problem/A
     
     Tested on Codeforces
 */
-
 void count_sort(vector<int>&p,vector<int>&c){
-    // sorting array p with respect to array c!
-    int n = p.size(),cnt[n];
-    memset(cnt,0,sizeof(cnt));
+    int n = p.size();
+    vector<int>cnt(n,0);
     for(int i = 0; i < n; i++){
         cnt[c[p[i]]]++;
     }
@@ -64,12 +61,12 @@ void count_sort(vector<int>&p,vector<int>&c){
     p = new_p;
     return;
 }
- 
+
 signed main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
-        freopen("in.txt","r",stdin);
+        freopen("../in.txt","r",stdin);
     #endif
     string s;
     cin >> s;
@@ -77,42 +74,58 @@ signed main(void)
     ll k = 0,n = s.length();
     vector<int> c(n),p(n);
     {
-        vector<pair<int,int>> a(n);
+        vector<pair<int,int>>a(n);
         for(int i = 0; i < n; i++){
             a[i] = {s[i],i};
         }
         sort(a.begin(),a.end());
         c[a[0].second] = 0;
         p[0] = a[0].second;
-        for(int i = 1; i < int(a.size()); i++){
+        for(int i = 1; i < n; i++){
             p[i] = a[i].second;
-            if(a[i - 1].first != a[i].first){
-                c[a[i].second] = c[a[i - 1].second] + 1;
+            if(a[i].first != a[i - 1].first){
+                c[a[i].second] = 1 + c[a[i - 1].second];
             }else{
                 c[a[i].second] = c[a[i - 1].second];
             }
-        } 
+        }
     }
-    while((1ll << k) < n){
-        for(int i = 0; i < int(p.size()); i++){
-            p[i] = (p[i] - (1ll << k) + n) % n;
+    ll mask = 1ll << k;
+    while(mask < n){
+        for(int i = 0; i < n; i++){
+            p[i] = (p[i] - mask + n) % n;
         }
         count_sort(p,c);
         vector<int> new_c(n);
-        new_c[p[0]] = 0;
-        for(int i = 1; i < int(p.size()); i++){
-            if(c[p[i]] == c[p[i - 1]] && c[(p[i] + (1ll << k)) % n] == c[(p[i - 1] + (1ll << k)) % n]){
+        new_c[p[0]] = 0; 
+        for(int i = 1; i < n; i++){
+            if(c[p[i]] == c[p[i - 1]] && c[(p[i] + mask) % n] == c[(p[i - 1] + mask) % n]){
                 new_c[p[i]] = new_c[p[i - 1]];
             }else{
-                new_c[p[i]] = new_c[p[i - 1]] + 1;
+                new_c[p[i]] = 1 + new_c[p[i - 1]];
             }
         }
-        c = new_c;    
-        k++;   
-    } 
-    for(int i = 0; i < n; i++){
-        cout << p[i] << " ";
+        c = new_c;
+        k++;
+        mask = (1ll << k);
     }
-    cout << endl;
+    vector<int> lcp(n - 1);
+    ll matched = 0;
+    for(int i = 0; i < n - 1; i++){
+        int prev_suffix = p[c[i] - 1]; 
+        while(s[(i + matched)] == s[(prev_suffix + matched)]){
+            matched++;
+        }
+        lcp[c[i] - 1] = matched;
+        matched = max(0ll,matched - 1);
+    }
+    ll ans = 0;
+    for(int i = 1; i < n; i++){
+        // Adding all substrings of the suffix
+        ans += (n - p[i] - 1);
+        // Substracting substrings which are already counted in the previous suffix
+        ans = ans - lcp[i - 1];
+    }
+    cout << ans << endl;
     return 0;
 }
