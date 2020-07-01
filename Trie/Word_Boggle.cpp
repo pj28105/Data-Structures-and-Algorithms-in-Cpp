@@ -11,75 +11,75 @@ using namespace std;
         Tested on Leetocde
 */
 
-inline bool isSafe(int i,int j,int r,int c){
-    if(i < 0 || j < 0 || i >= r || j >= c){
-        return 0;
-    }
-    return 1;
-}
-
 class Trie{
-    public:
-        unordered_map<char,Trie*> ma;
-        bool isEnd = 0;
-        Trie(){
-            for(int i = 0; i < 26; i++){
-                ma['a' + i] = NULL;
+  public:
+    unordered_map<char,Trie*> ma;
+    bool isEnd;
+    Trie(){
+        this->isEnd = 0;
+    }
+    void insert(string s){
+        Trie* curr = this;
+        for(auto i : s){
+            if(curr->ma.count(i) == 0){
+                curr->ma[i] = new Trie();
             }
-            isEnd = 0;
+            curr = curr->ma[i];
         }
-        void insert(string s,Trie* root){
-            for(char c : s){
-                if(!root->ma[c]){
-                    root->ma[c] = new Trie();
-                }
-                root = root->ma[c];
-            }
-            root->isEnd = 1;
-            return;
-        }
-        void dfs(vector<string>& ans,string curr,Trie* root,int i,int j,vector<vector<bool>>&vis,vector<vector<char>>& a,int r,int c){
-            if(!root){
-                return;
-            }
-            if(root->isEnd){
-                ans.push_back(curr);
-                root->isEnd = 0;
-            }
-            vis[i][j] = 1;
-            int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
-            for(int k = 0; k < 4; k++){
-                int ci = i  + dir[k][0];
-                int cj = j + dir[k][1];
-                if(isSafe(ci,cj,r,c) && root->ma[a[ci][cj]]){
-                    if(!vis[ci][cj]){
-                        dfs(ans,curr + a[ci][cj],root->ma[a[ci][cj]],ci,cj,vis,a,r,c);
-                    }
-                }
-            }
-            vis[i][j] = 0;
-            return;
-        }
+        curr->isEnd = 1;
+        return;
+    }
 };
 
 class Solution {
 public:
-    vector<string> findWords(vector<vector<char>>& a, vector<string>& words) {
-        Trie* root = new Trie();
-        for(string i : words){
-            root->insert(i,root);
+    int row,col;
+    void dfs(vector<vector<bool>>&vis,unordered_set<string>&se,vector<vector<char>>& a,int i,int j,Trie* root,string& curr){
+        if(root->isEnd){
+            se.insert(curr);
         }
-        int r = a.size(),c = a[0].size();
-        vector<string> ans;
-        vector<vector<bool>> vis(r,vector<bool>(c));
-        for(int i = 0; i < r; i++){
-            for(int j = 0; j < c; j++){
-                if(root->ma[a[i][j]]){
-                    string curr = "";
-                    curr += a[i][j];
-                    root->dfs(ans,curr,root->ma[a[i][j]],i,j,vis,a,r,c);   
+        vis[i][j] = 1;       
+        int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+        for(int k = 0; k < 4; k++){
+            int curri = i + dir[k][0];
+            int currj = j + dir[k][1];
+            if(!(curri < 0 || currj < 0 || curri >= row || currj >= col) && !vis[curri][currj]){
+                if(root->ma.find(a[curri][currj]) != root->ma.end()){
+                    curr.push_back(a[curri][currj]);
+                    dfs(vis,se,a,curri,currj,root->ma[a[curri][currj]],curr);
+                    curr.pop_back();
                 }
             }
+        }
+        vis[i][j] = 0;
+        return;
+    }
+
+    vector<string> findWords(vector<vector<char>>& a, vector<string>& w) {
+        if(w.empty() || a.empty() || a[0].empty()){
+            return {};
+        }
+        Trie* root = new Trie();
+        for(auto i : w){
+            root->insert(i);
+        }
+        row = a.size();
+        col = a[0].size();
+        vector<vector<bool>> vis(row,vector<bool>(col));
+        unordered_set<string>se;
+        string curr = "";
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                if(root->ma.find(a[i][j]) != root->ma.end()){
+                    curr.push_back(a[i][j]);
+                    dfs(vis,se,a,i,j,root->ma[a[i][j]],curr);
+                    curr.pop_back();
+                }
+            }
+        }
+        vector<string> ans;
+        for(auto i : se){
+            ans.emplace_back(i);
         }
         return ans;
     }
