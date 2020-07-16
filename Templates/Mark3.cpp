@@ -11,8 +11,11 @@
 #include <math.h>
 #include <utility>
 #include <algorithm>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp> 
+using namespace __gnu_pbds;
 using namespace std;
- 
+
 #define mod 1000000007
 #define ll long long
 #define tc int t; cin >> t; for(int tt = 1; tt <= t; tt++)
@@ -32,8 +35,11 @@ void __f(const char* names, Arg1&& arg1, Args&&... args){
 #define deb(...)
 #endif
 
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+
 // Dirty Fix
 // #define int long long
+
 
 ll power(ll a,ll b){
     ll res = 1;
@@ -53,6 +59,6 @@ signed main(void)
     #ifndef ONLINE_JUDGE
         freopen("in.txt","r",stdin);
     #endif
-    
+      
     return 0;
 }

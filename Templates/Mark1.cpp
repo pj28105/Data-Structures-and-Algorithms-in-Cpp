@@ -48,7 +48,7 @@ int main(void)
 {
     ios;
     #ifndef ONLINE_JUDGE
-        freopen("../in.txt","r",stdin);
+        freopen("in.txt","r",stdin);
     #endif
 
     return 0;
