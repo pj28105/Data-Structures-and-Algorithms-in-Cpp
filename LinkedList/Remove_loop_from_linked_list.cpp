@@ -98,24 +98,26 @@ int main()
 
 void removeLoop(Node* head){
     Node* slow = head,*fast = head;
+    bool hasLoop = 0;
     while(fast && fast->next){
         slow = slow->next;
         fast = fast->next->next;
         if(slow == fast){
+            hasLoop = 1;
             break;
         }
     }
-    if(!fast || !fast->next){
-        return;
+    if(hasLoop){
+        slow = head;
+        while(slow != fast){
+            fast = fast->next;
+            slow = slow->next;
+        }
+        fast = slow->next;
+        while(fast->next != slow){
+            fast = fast->next;
+        }
+        fast->next = NULL;
     }
-    slow = head;
-    while(slow != fast){
-        slow = slow->next;
-        fast = fast->next;
-    }
-    while(slow->next != fast){
-        slow = slow->next;
-    }
-    slow->next = NULL;
     return;
 }
