@@ -1,3 +1,5 @@
+#include<bits/stdc++.h>
+using namespace std;
 /*
     Problem link->
         https://leetcode.com/problems/palindrome-partitioning-ii/
