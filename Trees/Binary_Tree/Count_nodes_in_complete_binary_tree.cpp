@@ -7,56 +7,60 @@ using namespace std;
     Complexity-> O(logn * logn)
     Tested on Leetcode
 */
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    string convert(int x){
-       string bin = "";
-       while(x > 0){
-          if(x % 2){
-              bin += '1';
-          }else{
-              bin += '0';
-          }
-          x = x/2;
-       }
-       reverse(bin.begin(),bin.end());
-       return bin;
-    }
-    bool check(TreeNode* root,string bin,int i){
-        if(!root){
-            return false;
+    bool check(TreeNode* root,int idx,long long depth){
+        long long start = 1,end = (1ll << depth);
+        while(start != end){
+            long long mid = (start + end)/2;
+            if(idx > mid){
+                start = mid + 1;
+                root = root->right;
+            }else{
+                end = mid;
+                root = root->left;
+            }
         }
-        if(i == (int)bin.length()){
-            return 1;
-        }
-        if(bin[i] == '1'){
-            return check(root->right,bin,i + 1);
-        }
-        return check(root->left,bin,i + 1);
+        return root != NULL;
     }
     int countNodes(TreeNode* root) {
         if(!root){
             return 0;
         }
-        int h = 0;
+        int maxd = -1;
         TreeNode* curr = root;
         while(curr){
+            maxd++;
             curr = curr->left;
-            h++;
         }
-        int st = (1 << (h - 1)) ,en = (1 << h) - 1;
-        int ans = 0,ref = (1 << (h - 1)) - 1;
-        while(st <= en){
-            int mid = (st + en) >> 1;
-            string bin = convert(mid);
-            if(check(root,bin,1)){
-                ans = mid - ref;
-                st = mid + 1;
+        if(maxd == 0){
+            return 1;
+        }
+        long long mask = 0;
+        for(long long i = 0; i < maxd; i++){
+            mask |= (1ll << i);
+        }
+        long long st = 1,se = 1 << maxd,extra = 1;
+        while(st <= se){
+            long long mid = (st + se) >> 1ll;
+            if(check(root,mid,maxd)){
+                extra = mid;
+                st = mid + 1;  
             }else{
-                en = mid - 1;
+                se = mid - 1;
             }
         }
-        ans += ref;
-        return ans;
+        return mask + extra;
     }
 };
