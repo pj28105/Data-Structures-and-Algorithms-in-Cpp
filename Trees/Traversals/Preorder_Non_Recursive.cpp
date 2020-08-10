@@ -2,156 +2,34 @@
 using namespace std;
 
 /*
-
-     Tree Building funcs are from GFG
-     Check last function
-     Function is tested on GFG
+    Problem link->
+        https://leetcode.com/problems/binary-tree-preorder-traversal/
+        
+    Function is tested on Leetcode!
 */
-
-// Tree Node
-struct Node
-{
-    int data;
-    Node* left;
-    Node* right;
-};
-void preorder(struct Node* root);
-
-// Utility function to create a new Tree Node
-Node* newNode(int val)
-{
-    Node* temp = new Node;
-    temp->data = val;
-    temp->left = NULL;
-    temp->right = NULL;
-
-    return temp;
-}
-
-
-// Function to Build Tree
-Node* buildTree(string str)
-{
-    // Corner Case
-    if(str.length() == 0 || str[0] == 'N')
-        return NULL;
-
-    // Creating vector of strings from input
-    // string after spliting by space
-    vector<string> ip;
-
-    istringstream iss(str);
-    for(string str; iss >> str; )
-        ip.push_back(str);
-
-    // for(string i:ip)
-    //     cout<<i<<" ";
-    // cout<<endl;
-    // Create the root of the tree
-    Node* root = newNode(stoi(ip[0]));
-
-    // Push the root to the queue
-    queue<Node*> queue;
-    queue.push(root);
-
-    // Starting from the second element
-    int i = 1;
-    while(!queue.empty() && i < ip.size()) {
-
-        // Get and remove the front of the queue
-        Node* currNode = queue.front();
-        queue.pop();
-
-        // Get the current node's value from the string
-        string currVal = ip[i];
-
-        // If the left child is not null
-        if(currVal != "N") {
-
-            // Create the left child for the current node
-            currNode->left = newNode(stoi(currVal));
-
-            // Push it to the queue
-            queue.push(currNode->left);
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        if(!root){
+            return {};
         }
-
-        // For the right child
-        i++;
-        if(i >= ip.size())
-            break;
-        currVal = ip[i];
-
-        // If the right child is not null
-        if(currVal != "N") {
-
-            // Create the right child for the current node
-            currNode->right = newNode(stoi(currVal));
-
-            // Push it to the queue
-            queue.push(currNode->right);
-        }
-        i++;
-    }
-
-    return root;
-}
-
-
-int main() {
-    int t;
-    scanf("%d ",&t);
-    while(t--)
-    {
-        string s;
-        getline(cin,s);
-        Node* root = buildTree(s);
-
-        preorder(root);
-        cout<<endl;
-    }
-    return 0;
-}
-// } Driver Code Ends
-/* A binary tree node has data, pointer to left child
-   and a pointer to right child  
-
-/*
-struct Node
-{
-    int data;
-    struct Node* left;
-    struct Node* right;
-    
-    Node(int x){
-        data = x;
-        left = right = NULL;
-    }
-};
-*/
-// Written by PJ28105
-void preorder(Node* root)
-{
-    if(!root){
-        return;
-    }
-    stack<Node*>st;
-    st.push(root);
-    cout << root->data << " ";
-    while(!st.empty()){
-        Node* curr = st.top()->left;
-        while(curr != NULL){
-            cout << curr->data << " ";
-            st.push(curr);
-            curr = curr->left;
-        }
-        while(!st.empty()){
-            curr = st.top();
-            st.pop();
-            if(curr->right){
-                cout << curr->right->data << " ";
-                st.push(curr->right);
-                break;
+        vector<int> ans;
+        stack<TreeNode*> st;
+        while(root){
+            while(root){
+                ans.push_back(root->val);
+                st.push(root);
+                root = root->left;
+            }
+            while(!st.empty()){
+                TreeNode* curr = st.top();
+                st.pop();
+                if(curr->right){
+                    root = curr->right;
+                    break;
+                }
             }
         }
+        return ans;
     }
-}
+};
