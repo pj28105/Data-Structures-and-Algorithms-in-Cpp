@@ -2,6 +2,7 @@
     Problem link->
         https://leetcode.com/problems/android-unlock-patterns/
     
+    Checkout its optimized backtrack solution and dp solution!
     Tested on Leetcode!
 */
 class Solution {
