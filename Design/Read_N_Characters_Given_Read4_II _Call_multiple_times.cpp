@@ -26,29 +26,35 @@ public:
      * @param n   Number of characters to read
      * @return    The number of actual characters read
      */
-    char r_buff[4];
-    int in = 0,siz = 0;
-    
+    char temp[4];
+    int size,tempIdx;
+    Solution(){
+        this->size = 0;
+        this->tempIdx = 0;
+    }
     int read(char *buf, int n) {
-        for(int i = 1; i <= n; i++){
-            if(in >= siz && (n - i + 1) >= 4){
-                siz = read4(buf + i - 1);
-                if(siz == 0){
-                    return i - 1;
-                }
-                i += siz - 1;
-                siz = 0;
-            }else{
-                if(in >= siz){
-                    siz = read4(r_buff);
-                    if(siz == 0){
-                        return i - 1;
-                    }
-                    in = 0;
-                }
-                buf[i - 1] = r_buff[in++];
-            }
-        }
-        return n;
+        int bufIdx = 0,cnt = 0;
+        while(tempIdx < size && cnt < n){
+           buf[bufIdx] = temp[tempIdx];
+           tempIdx++;
+           bufIdx++;
+           cnt++;
+       }
+       while(cnt < n){
+           int fill = read4(buf + bufIdx);
+           cnt += fill;
+           bufIdx += fill;
+           if(fill < 4){
+               break;
+           }
+       }
+       if(cnt > n){
+           size = cnt - n;
+           tempIdx = 0;
+           for(int i = bufIdx - size; i < bufIdx; i++){
+               temp[i - (bufIdx - size)] = buf[i];
+           }
+       }
+       return min(cnt,n); 
     }
 };
