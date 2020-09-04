@@ -89,7 +89,7 @@ int distinctEchoSubstrings(string text) {
                         f = 0;
                         break;
                     }
-                    }
+                }
                 if(f){
                     ans++;
                     hash_set.insert(currhash);
