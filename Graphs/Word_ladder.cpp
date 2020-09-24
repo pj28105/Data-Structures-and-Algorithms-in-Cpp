@@ -18,51 +18,52 @@ using namespace std;
 
 class Solution {
 public:
-    int ladderLength(string s, string d, vector<string>& dict) {
-        if(s == d){
+    int ladderLength(string b, string e, vector<string>& list) {
+        unordered_set<string>vis;
+        unordered_map<string,vector<string>>paths;
+        for(int i = 0; i < list.size(); i++){
+            string temp = list[i];
+            for(int j = 0; j < list[i].length(); j++){
+                char tempChar = temp[j];
+                temp[j] = '*';
+                paths[temp].push_back(list[i]);
+                temp[j] = tempChar;
+            }
+            vis.insert(list[i]);
+        }
+        if(!vis.count(e)){
             return 0;
         }
-        dict.push_back(s);
-        unordered_map<string,vector<string>>g;
-        for(int i = 0; i < dict.size(); i++){
-            for(int j = i + 1; j < dict.size(); j++){
-                int ch = 0;
-                for(int k = 0; k < dict[i].length(); k++){
-                    if(dict[i][k] != dict[j][k]){
-                        ch++;
-                    }
-                    if(ch >= 2){
-                        break;
-                    }
-                }
-                if(ch <= 1){
-                    g[dict[i]].push_back(dict[j]);
-                    g[dict[j]].push_back(dict[i]);
-                }
-            }
-        }
-        unordered_set<string>vis;
-        int ans = 0;
-        queue<string> q;
-        q.push(s);
-        vis.insert(s);
+        vis.clear();
+        queue<string>q;
+        q.push(b);
+        vis.insert(b);
+        int moves = 0;
         while(!q.empty()){
-            ans++;
-            int n = q.size();
-            while(n--){
-                string curr = q.front();
-                if(curr == d){
-                    return ans;
-                }
-                q.pop();
-                for(string i : g[curr]){
-                    if(vis.find(i) == vis.end()){
-                        q.push(i);
-                        vis.insert(i);
-                    }
-                }
-            }
+           moves++;
+           int n = q.size();
+           while(n--){
+               string curr = q.front();
+               q.pop();
+               if(curr == e){
+                   return moves;
+               }
+               for(int i = 0; i < curr.length(); i++){
+                   char tempChar = curr[i];
+                   curr[i] = '*';
+                   for(auto j : paths[curr]){
+                       if(!vis.count(j)){
+                           if(j == e){
+                               return moves + 1;
+                           }
+                           q.push(j);
+                           vis.insert(j);
+                       }
+                   }
+                   curr[i] = tempChar;
+               }
+           }
         }
-        return 0;   
+        return 0;
     }
 };

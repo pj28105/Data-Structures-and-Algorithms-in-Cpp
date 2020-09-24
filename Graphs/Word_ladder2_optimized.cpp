@@ -12,66 +12,66 @@ using namespace std;
 
 class Solution {
 public:
-    void dfs(unordered_map<string,vector<string>>&par,vector<string>&path,vector<vector<string>>&ans,string s){
-        if(par[s].empty()){
-            ans.push_back(path);
-            return;
+    void dfs(vector<vector<string>>&result,unordered_map<string,vector<string>>&parents,vector<string>&aux,string& e,int dist){
+        
+        aux.push_back(e);
+        if(dist == 1){
+            result.push_back(aux);
         }
-        for(string i : par[s]){
-            path.push_back(i);
-            dfs(par,path,ans,i);
-            path.pop_back();
-        }
+        for(auto j : parents[e]){
+            dfs(result,parents,aux,j,dist - 1);
+            
+        } 
+        aux.pop_back();
         return;
     }
-    vector<vector<string>> findLadders(string s, string d, vector<string>& dict) {
-        unordered_map<string,unordered_set<string>>g;
-        dict.push_back(s);
-        for(int i = 0; i < dict.size(); i++){
-            for(int j = i + 1; j < dict.size(); j++){
-                int ch = 0;
-                for(int k = 0; k < dict[i].length(); k++){
-                    if(dict[i][k] != dict[j][k]){
-                        ch++;
-                    }
-                    if(ch >= 2){
-                        break;
-                    }
-                }
-                if(ch <= 1){
-                    g[dict[i]].insert(dict[j]);
-                    g[dict[j]].insert(dict[i]);
-                }
+    vector<vector<string>> findLadders(string b, string e, vector<string>& list) {
+        unordered_map<string,vector<string>>parents;
+        unordered_map<string,int>dist;
+        unordered_map<string,vector<string>>g;
+        for(int i = 0; i < list.size(); i++){
+            string temp = list[i];
+            for(int j = 0; j < list[i].length(); j++){
+                char tempChar = temp[j];
+                temp[j] = '*';
+                g[temp].push_back(list[i]);
+                temp[j] = tempChar;
             }
         }
-        unordered_map<string,int>dist;
-        unordered_map<string,vector<string>>par;
-        queue<string> q;
-        q.push(d);
-        dist[d] = 0;
+        queue<string>q;
+        q.push(b);
+        dist[b] = 1;
         while(!q.empty()){
             string curr = q.front();
-            q.pop();
-            if(curr == s){
+            if(curr == e){
                 break;
             }
-            for(string i : g[curr]){
-                if(dist.find(i) == dist.end()){
-                    par[i].push_back(curr);
-                    dist[i] = dist[curr] + 1;
-                    q.push(i);
-                }else if(dist[i] == (dist[curr] + 1)){
-                    par[i].push_back(curr);
+            q.pop();
+            string temp = curr;
+            for(int i = 0; i < curr.length(); i++){
+                char tempChar = temp[i];
+                temp[i] = '*';
+                for(auto j : g[temp]){
+                    if(!dist.count(j)){
+                        parents[j].push_back(curr);
+                        dist[j] = dist[curr] + 1;
+                        q.push(j);
+                    }else if(dist[j] == (dist[curr] + 1)){
+                        parents[j].push_back(curr);
+                    }
                 }
+                temp[i] = tempChar;
             }
         }
-        if(dist.find(s) == dist.end()){
+        if(!dist.count(e)){
             return {};
         }
-        vector<vector<string>> ans;
-        vector<string>path;
-        path.push_back(s);
-        dfs(par,path,ans,s);
-        return ans;
+        vector<vector<string>>result;
+        vector<string>aux;
+        dfs(result,parents,aux,e,dist[e]);
+        for(int i = 0; i < result.size(); i++){
+            reverse(result[i].begin(),result[i].end());
+        }
+        return result;
     }
 };
