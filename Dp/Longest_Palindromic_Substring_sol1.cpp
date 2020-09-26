@@ -9,44 +9,28 @@ using namespace std;
 */
 class Solution {
 public:
+    int dp[1000][1000];
     string longestPalindrome(string s) {
-        int st = 0,en = -1;
+        if(s.empty()){
+            return "";
+        }
         int n = s.length();
-        vector<vector<int>>dp(n,vector<int>(n));
-        int maxlen = 0;
+        memset(dp,0,sizeof(dp));
+        int maxLen = 0,st = -1,en = -1;
         for(int i = n - 1; i >= 0; i--){
             for(int j = i; j < n; j++){
                 if(i == j){
                     dp[i][j] = 1;
-                }else if(s[i] == s[j]){
-                    if(i + 1 == j){
-                        dp[i][j] = 2;
-                    }else if(dp[i + 1][j - 1] == (j - i - 1)){
-                        dp[i][j] = 2 + dp[i + 1][j - 1];
-                    }
-                }else{
-                    dp[i][j] = 0;
+                }else if(s[i] == s[j] && dp[i + 1][j - 1] == (j - i - 1)){
+                    dp[i][j] = 2 + dp[i + 1][j - 1];
                 }
-                if(maxlen <= dp[i][j]){
+                if(dp[i][j] > maxLen){
+                    maxLen = dp[i][j];
                     st = i;
                     en = j;
-                    maxlen = dp[i][j];
                 }
             }
         }
-        char str [maxlen + 1];
-        str[maxlen] = '\0';
-        int i = 0,j = maxlen - 1;
-        while((st <= en && maxlen > 0)){
-            str[i] = s[st];
-            str[j] = s[en];
-            en--;
-            st++;
-            i++;
-            j--;
-            maxlen -= 2;
-        }
-        string ans(str);
-        return ans;
+        return s.substr(st,en - st + 1);
     }
 };
