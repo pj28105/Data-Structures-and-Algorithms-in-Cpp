@@ -4,103 +4,99 @@
     
     Tested on Leetcode!
 */
+class Node{
+    public:
+        Node* prev;
+        Node* next;
+        int val;
+        Node(int val){
+            prev = NULL;
+            next = NULL;
+            this->val = val; 
+        }
+};
+
 class LinkedList{
     public:
-        LinkedList *prev,*next;
-        int key,value;
-        static LinkedList* head,*tail;
-        LinkedList(int key = -1,int value = -1){
-            this->prev = NULL;
-            this->next = NULL;
-            this->key = key;
-            this->value = value;
+        Node* head,*tail;
+        LinkedList(){
+            head = tail = NULL;
         }
-        void insert(LinkedList* node){
-            if(head == NULL){
+        Node* insert(int val){
+            Node* node = new Node(val);
+            if(!head){
                 head = node;
                 tail = node;
-                return;
+                return node;
             }
             node->next = head;
             head->prev = node;
             head = node;
-            return;
+            return node;
         }
-        void del(LinkedList* node){
-            if(tail == node){
-                del_lru();
-                return;
-            }
-            if(head == node){
+        void del(Node* curr){
+            if(curr == head){
+                if(tail == head){
+                    tail = NULL,head = NULL;
+                    delete curr;
+                    return;
+                }
                 head = head->next;
                 head->prev = NULL;
-                delete node;
+                delete curr;
                 return;
             }
-            node->prev->next = node->next;
-            node->next->prev = node->prev;
-            delete node;
-            return;
-        }    
-        int del_lru(){
-            if(head == tail){
-                int key = head->key;
-                delete head;
-                head = NULL;
-                tail = NULL;
-                return key;
+            if(curr == tail){
+                tail = tail->prev;
+                tail->next = NULL;
+                delete curr;
+                return;
             }
-            int key = tail->key;
-            LinkedList* temp = tail;
-            tail = tail->prev;
-            tail->next = NULL;
-            delete temp;
+            curr->prev->next = curr->next;
+            curr->next->prev = curr->prev;
+            delete curr;
+            return;
+        }
+        int del_lru(){
+            int key = tail->val;
+            del(tail);
             return key;
-        } 
+        }
 };
-
-LinkedList* LinkedList::head = NULL;
-LinkedList* LinkedList::tail = NULL;
 
 class LRUCache {
 public:
-    int size = 0;
-    unordered_map<int,LinkedList*>ma;
-    LinkedList control;
+    int maxSize;
+    unordered_map<int,pair<int,Node*>>look;
+    LinkedList* list;
     LRUCache(int capacity) {
-           size = capacity;
-           ma.clear();
-           LinkedList::head = NULL;
-           LinkedList::tail = NULL;
+        maxSize = capacity;
+        look.clear();
+        list = new LinkedList();
     }
     
     int get(int key) {
-        if(ma.find(key) == ma.end()){
+        if(!look.count(key)){
             return -1;
         }
-        int value = ma[key]->value;
-        control.del(ma[key]);
-        LinkedList* node = new LinkedList(key,value);
-        ma[key] = node;
-        control.insert(node);
-        return value;
+        list->del(look[key].second);
+        look[key].second = list->insert(key);
+        return look[key].first;
     }
     
     void put(int key, int value) {
-        if(ma.find(key) == ma.end()){
-            if(size < (ma.size() + 1)){
-                int x = control.del_lru();
-                ma.erase(x);
-            }
-            LinkedList* node = new LinkedList(key,value);
-            control.insert(node);
-            ma[key] = node;
+        if(look.count(key)){
+            look[key].first = value;
+            list->del(look[key].second);
+            look[key].second = list->insert(key);
             return;
         }
-        control.del(ma[key]);
-        LinkedList *node = new LinkedList(key,value);
-        control.insert(node);
-        ma[key] = node;
+        if((look.size() + 1) > maxSize){
+            int temp = list->del_lru();
+            look.erase(temp);
+        }
+        look[key].second = list->insert(key);
+        look[key].first = value;
         return;
     }
 };
