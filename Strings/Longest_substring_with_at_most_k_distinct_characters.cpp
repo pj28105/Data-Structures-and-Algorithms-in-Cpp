@@ -4,6 +4,8 @@ using namespace std;
     Problem link->
         https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/
     
+	To solve this problem in one pass use LinkedHashMap(maintains insertion order).
+	See Editorial @ Leetcode for reference! 
     Tested on leetcode!
 */
 class Solution {
