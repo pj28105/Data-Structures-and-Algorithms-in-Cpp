@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <cstring>
 #include <vector>
 #include <map>
@@ -9,6 +10,7 @@
 #include <stack>
 #include <limits.h>
 #include <math.h>
+#include <numeric>
 #include <utility>
 #include <algorithm>
 using namespace std;
