@@ -2,4 +2,4 @@ in.txt
 a.out
 a.exe
 test.cpp
-.vscode
+**/.vscode
