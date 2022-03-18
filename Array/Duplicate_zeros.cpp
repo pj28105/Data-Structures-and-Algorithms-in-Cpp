@@ -8,34 +8,30 @@ using namespace std;
 */
 class Solution {
 public:
-    void duplicateZeros(vector<int>& a) {
-        if(a.size() <= 1){
-            return;
-        }
-        int e = a.size() - 1,s = 0;   
-        while(s < e){
-            if(a[s] == 0){
-                e--;
+    void duplicateZeros(vector<int>& arr) {
+        int n = arr.size(), newSize = 0, end = -1;
+        bool includeLastZero = 0;
+        for(int i = 0 ; i < n; i++){
+            newSize += (arr[i] == 0 ? 2 : 1);
+            if (arr[i] == 0 && newSize == n){
+                includeLastZero = 1;
             }
-            s++;
+            if (newSize >= n){
+                newSize = n;
+                end = i;
+                break;
+            }
         }
-        int fill = a.size() - 1;
-        if(s == e){
-            a[fill] = a[e];
-            fill--;
-            e--;
-        }
-        while(e >= 0){
-            if(a[e] == 0){
-                a[fill] = 0;
-                a[fill - 1] = 0;
-                fill -= 2;
+        int j = n - 1;
+        for(int i = end; i >= 0; i--){
+            if (arr[i] == 0 && (i < end || includeLastZero)){
+                arr[j] = 0;
+                arr[j - 1] = 0;
+                j-=2;
             }else{
-                a[fill] = a[e];
-                fill--;
+                arr[j] = arr[i];
+                j--;
             }
-            e--;
         }
-        return;
     }
 };
