@@ -5,9 +5,9 @@ using namespace std;
     Problem link link->
         https://leetcode.com/problems/word-ladder/
 
-    Checout more optimized solution on leetcode!
+    Checkout more optimized solution on leetcode!
 
-    Note-> This problem in from Amazon sde test serise. GFG has wrong testcases for this problem.
+    Note-> This problem is in from Amazon sde test serise. GFG has wrong testcases for this problem.
         Don't look at the GFG editoral too.
 
         2) Do look at its harder version i.e word ladder 2 on leetcode. Check its solution on github.
