@@ -2,7 +2,7 @@
 using namespace std;
 /*
     Problem link->
-        https://leetcode.com/explore/interview/card/google/64/dynamic-programming-4/451/
+        https://leetcode.com/problems/longest-palindromic-substring/
     
     Tested on Leetcode!
 */

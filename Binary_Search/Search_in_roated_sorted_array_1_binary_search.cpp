@@ -2,7 +2,7 @@
 using namespace std;
 /*
     Problem link->
-        https://leetcode.com/explore/learn/card/binary-search/125/template-i/952/
+        https://leetcode.com/problems/search-in-rotated-sorted-array/
     
     Tested on Leetcode!
 
