@@ -1,30 +1,39 @@
 /*
     Problem link->
-        https://practice.geeksforgeeks.org/problems/peak-element/1/?track=amazon-searching&batchId=192
+        https://leetcode.com/problems/find-peak-element/
     
     Tested on Leetcode!
 */
-int peakElement(int arr[], int n){
-   if(n == 1){
-       return 0;
-   }
-   if(arr[0] >= arr[1]){
-       return 0;
-   }
-   if(arr[n - 1] >= arr[n - 2]){
-       return n - 1;
-   }
-   int s = 1,e = n - 2;
-   while(s <= e){
-       int mid = s + (e - s)/2;
-       if(arr[mid - 1] <= arr[mid] && arr[mid] >= arr[mid + 1]){
-           return mid;
-       }
-       if(arr[mid] < arr[mid + 1]){
-           s = mid + 1;
-       }else{
-           e = mid - 1;
-       }
-   }
-   return -1;
-}
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        if(nums.size() == 1){
+            return 0;
+        }
+        int n = nums.size(), start = 0, end = n - 1;
+        while(start <= end){
+            int mid = (start + end) >> 1;
+            if(mid == 0) {
+                if(nums[1] < nums[0]) {
+                    return 0;
+                }else{
+                    start = mid + 1;
+                }
+            }else if(mid == n - 1) {
+                if(nums[n - 2] < nums[n - 1]){
+                    return n - 1;
+                }
+                end = mid - 1;
+            }else if (nums[mid - 1] < nums[mid] && nums[mid] > nums[mid + 1]){
+                return mid;
+            }else{
+                if(nums[mid] > nums[mid - 1]) {
+                    start = mid + 1;
+                }else{
+                    end = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+};
