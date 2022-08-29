@@ -4,41 +4,44 @@ using namespace std;
     Problem link->
         https://leetcode.com/problems/median-of-two-sorted-arrays/
     
+    Corner Case:
+        1) nums1.size() should always be less than all equal to nums2.size()
+
     Tested on Leetcode!
 */
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        if(nums1.size() > nums2.size()){
-            return findMedianSortedArrays(nums2,nums1);
+        int n = nums1.size(), m = nums2.size();
+        if(n > m) {
+            return findMedianSortedArrays(nums2, nums1);
         }
-        int n = nums1.size(),m = nums2.size();
         if(n == 0){
-            if(m & 1){
-                return nums2[m/2];
+            if(m % 2 == 0){
+                return (nums2[m/2] + nums2[m/2 - 1])/2.0;   
             }
-            return (nums2[m/2] + nums2[m/2 - 1])/2.0;
+            return nums2[m/2];
         }
-        int s = 0,e = n,min_x,max_x,min_y,max_y,mid,ypart;
-        while(1){
-            mid = s + (e - s)/2;
-            ypart = (n + m + 1)/2 - mid;
-            min_x = mid == 0 ? INT_MIN : nums1[mid - 1];
-            max_x = mid == n ? INT_MAX : nums1[mid];
-            min_y = ypart == 0 ? INT_MIN : nums2[ypart - 1];
-            max_y = ypart == m ? INT_MAX : nums2[ypart];
-            if(min_x <= max_y && min_y <= max_x){
-                if((n + m) & 1){
-                    return max(min_x,min_y);
+        int l1 = 0, l2 = 0, r1 = 0, r2 = 0, st = 0, en = n;
+        while(1) {
+            int partition = (st + en) >> 1;
+            int partition2 = (n + m + 1)/2 - partition;
+            l1 = (partition == 0 ? INT_MIN : nums1[partition - 1]);
+            r1 = (partition == n ? INT_MAX : nums1[partition]);
+            l2 = (partition2 == 0 ? INT_MIN : nums2[partition2 - 1]);
+            r2 = (partition2 == m ? INT_MAX : nums2[partition2]);
+            if(l1 <= r2 && l2 <= r1){
+                if((n + m) % 2 == 0){
+                    return (max(l1, l2) + min(r1, r2))/2.0;
+                }else{
+                    return max(l1, l2);
                 }
-                return (max(min_x,min_y) + min(max_x,max_y))/2.0;
-            }
-            else if(min_x > max_y){
-                e = mid - 1;
+            }else if(l1 > r2){
+                en = partition - 1;
             }else{
-               s = mid + 1; 
+                st = partition + 1;
             }
         }
-        return -1;
+        return -1.0;
     }
 };
