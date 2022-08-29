@@ -5,7 +5,7 @@ using namespace std;
         https://leetcode.com/problems/median-of-two-sorted-arrays/
     
     Corner Case:
-        1) nums1.size() should always be less than all equal to nums2.size()
+        1) nums1.size() should always be less than or equal to nums2.size()
 
     Tested on Leetcode!
 */
