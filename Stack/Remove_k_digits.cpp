@@ -4,6 +4,9 @@ using namespace std;
     Problem link->
         https://leetcode.com/problems/remove-k-digits/
     Tested on Leetcode!
+
+    See this for intuition
+        https://www.youtube.com/watch?v=3QJzHqNAEXs
 */
 class Solution {
 public:
