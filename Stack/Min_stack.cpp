@@ -5,6 +5,13 @@
     https://www.geeksforgeeks.org/design-a-stack-to-retrieve-original-elements-and-return-the-minimum-element-in-o1-time-and-o1-space/?ref=rp
     
     Note-> This solution works for Max stack as well.
+
+
+    //Proof 
+        newInsertedMinValue < currMinValue  
+        newInsertedMinValue - currMinValue < 0
+        newInsertedMinValue + newInsertedMinValue - currMinValue < newInsertedMinValue
+        2*newInsertedMinValue - currMinValue < newInsertedMinValue
 */
 
 class MinStack {
